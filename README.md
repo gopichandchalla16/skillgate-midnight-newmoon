@@ -65,7 +65,22 @@ docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server 
 
 4. Compile the contract
 
+If you are using Windows PowerShell, make sure you are invoking the Midnight
+Compact compiler and not the built-in Windows `compact.exe` utility. If the
+command shows the Windows file-compression help text, you are in the wrong
+`compact` context.
+
+Use WSL for the compiler step if needed:
+
 ```bash
+wsl
+cd /mnt/c/Users/gopic/Downloads/skillgate-midnight-newmoon-main/skillgate-midnight-newmoon
+compact compile contracts/skillgate.compact contracts/managed/skillgate
+```
+
+If the compiler is installed in PowerShell already, this command should work:
+
+```powershell
 compact compile contracts/skillgate.compact contracts/managed/skillgate
 ```
 
