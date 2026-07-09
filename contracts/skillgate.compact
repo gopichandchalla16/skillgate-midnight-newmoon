@@ -1,0 +1,27 @@
+pragma language_version 0.16;
+
+import CompactStandardLibrary;
+
+// SkillGate
+// A freelancer/agent proves their private skill/reputation score meets or
+// exceeds a public threshold — WITHOUT ever revealing the actual score.
+//
+// This is the privacy pattern LumoPay-style platforms need: a client can
+// require "prove you're rated 80+" without the freelancer exposing their
+// exact private score to every counterparty.
+
+// Public ledger state: only the pass/fail result is ever stored on-chain.
+export ledger passed: Boolean;
+
+// Witness: reads the user's private score from off-chain/local state.
+// Implemented in TypeScript (see src/witnesses.ts). Never touches the chain.
+witness getSkillScore(): Uint<16>;
+
+// Circuit: takes a PUBLIC threshold, compares it against the PRIVATE score,
+// and discloses only the boolean result of that comparison.
+export circuit checkEligibility(threshold: Uint<16>): [] {
+  const score = getSkillScore();
+  // disclose() is required here: without it, the compiler refuses to let a
+  // value derived from witness data touch public ledger state.
+  passed = disclose(score >= threshold);
+}
