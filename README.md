@@ -1,92 +1,122 @@
-# SkillGate — Midnight "New Moon to Full" Level 1 Submission
+# SkillGate — Midnight New Moon Level 1 Submission
 
-## What this is
+## What this project does
 
-A minimal Compact smart contract that lets a user **prove their private
-skill/reputation score meets a public threshold, without ever revealing the
-score itself.** Built as Level 1 (New Moon) of MLH's Monthly Moonshots on
-Midnight challenge.
+SkillGate is a minimal Compact smart contract that demonstrates how Midnight can
+verify a private skill or reputation score without exposing the score itself.
+The contract takes a public threshold, compares it with a private witness value,
+and discloses only the final pass/fail result on-chain.
 
 ## Initial product idea
 
-Freelance and cross-border gig platforms (like the on-chain milestone-payment
-tools I'm building on Stellar) need a way for a client to verify "this
-freelancer is rated 80+" before releasing a job — without forcing the
-freelancer to expose their full private rating history to every client they
-work with. SkillGate demonstrates the core primitive for that: a private
-score lives off-chain as a witness, and the contract discloses only a single
-boolean (pass/fail) on-chain. Long-term, this pattern could extend into a
-full "Private Reputation Passport" — a portable, ZK-verified trust score
-freelancers carry across platforms, disclosing only what a specific job
-requires (e.g. "rated 80+ in smart contract audits") instead of their entire
-work history.
+This project is a simple building block for privacy-first reputation systems.
+A freelance platform or cross-border gig marketplace could use a pattern like
+this to verify that a worker meets a minimum score or qualification threshold
+without revealing their full private history to every client or counterparty.
+In the long term, this could evolve into a portable private reputation passport
+that proves trustworthiness while preserving user privacy.
 
 ## Public state vs. private witness
 
-- **Private witness** (`getSkillScore`): implemented off-chain in
-  `src/witnesses.ts`. This is where the actual numeric score lives — it is
-  never sent to the chain and never appears in any transaction.
-- **Public ledger state** (`passed: Boolean`): the *only* thing ever written
-  on-chain. It's the result of comparing the private score against a public
-  threshold, wrapped in `disclose()` as required by the compiler.
+- Private witness: `getSkillScore()` in `src/witnesses.ts`
+  - This is where the actual numeric score lives.
+  - It remains off-chain and is never published to the ledger.
+- Public ledger state: `passed: Boolean` in `contracts/skillgate.compact`
+  - Only the comparison result is written to the chain.
+  - `disclose()` is used so the contract can expose the boolean result without
+    revealing the underlying private value.
 
-This is Compact's "private by default" model: any value derived from a
-witness is untouchable by the public ledger until you explicitly wrap it in
-`disclose()`. Here, we disclose the comparison result — never the score.
+This is the core Midnight privacy pattern: private data stays private until the
+contract explicitly chooses to disclose a specific result.
 
 ## Project structure
 
-```
+```text
 contracts/
-  skillgate.compact       # the Compact contract
-  managed/                # generated after `compact compile` (circuits + keys)
+  skillgate.compact       # Compact contract source
+  managed/                # generated after compilation
 src/
-  witnesses.ts             # off-chain witness implementation (private state)
+  witnesses.ts           # off-chain witness implementation
 test/
-  skillgate.test.ts        # witness unit tests
-screenshots/
-  compile-output.png       # add after running compact compile
-  deployed-contract.png    # add after deploying to Preview/Preprod
+  skillgate.test.ts       # local unit tests
+screenshots/             # add your real compile/deploy screenshots here
 ```
 
-## Setup instructions (run locally)
+## Setup instructions
 
-1. Install prerequisites:
-   - Docker (for the proof server)
-   - Node.js v22+
-   - Midnight's Compact compiler — follow docs.midnight.network's toolchain install guide
+1. Install prerequisites
+   - Node.js 22+
+   - Docker Desktop
+   - Midnight Compact toolchain
 
-2. Clone this repo and install dependencies:
-   ```bash
-   git clone https://github.com/gopichandchalla16/skillgate-midnight-newmoon.git
-   cd skillgate-midnight-newmoon
-   npm install
-   ```
+2. Clone the repository and install dependencies
 
-3. Compile the contract:
-   ```bash
-   compact compile contracts/skillgate.compact contracts/managed/skillgate
-   ```
+```bash
+git clone https://github.com/gopichandchalla16/skillgate-midnight-newmoon.git
+cd skillgate-midnight-newmoon
+npm install
+```
 
-4. Start the proof server (separate terminal, Docker running):
-   ```bash
-   docker run -p 6300:6300 midnightnetwork/proof-server
-   ```
+3. Start the proof server (in a separate terminal)
 
-5. Run the unit tests:
-   ```bash
-   npm test
-   ```
+```bash
+docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+```
 
-6. Deploy to Preview/Preprod using the Midnight CLI/SDK deploy script.
-   Screenshot the resulting contract address.
+4. Compile the contract
 
-## Requirements checklist
+```bash
+compact compile contracts/skillgate.compact contracts/managed/skillgate
+```
 
-- [x] Toolchain set up, contract written
-- [ ] `compact compile` run locally, `managed/` generated
-- [ ] Passing test suite
-- [ ] Deployed to Preview/Preprod with visible contract address
-- [x] Initial product idea paragraph (above)
-- [ ] 5+ meaningful commits
+5. Run the tests
+
+```bash
+npm test
+```
+
+6. Deploy to Preview or Preprod using your Midnight deployment flow and note the
+   resulting contract address.
+
+## How to capture screenshots for the submission
+
+Use the VS Code integrated terminal and run these commands:
+
+```bash
+cd C:\path\to\skillgate-midnight-newmoon
+npm test
+compact compile contracts/skillgate.compact contracts/managed/skillgate
+git status --short
+```
+
+Take screenshots on your phone or laptop of:
+
+- the terminal output showing the successful compile step and generated files in
+  `contracts/managed`
+- the deployment output showing the contract address
+
+Save them as PNG files in the `screenshots/` folder using names like:
+
+```text
+screenshots/compile-output.png
+screenshots/deployed-contract.png
+```
+
+Then upload them manually to GitHub:
+
+1. Open your repository in GitHub.
+2. Go to the `screenshots/` folder.
+3. Click `Add file` -> `Upload files`.
+4. Drag the two PNG files into the upload box.
+5. Commit the new files to `main`.
+
+## Submission checklist
+
+- [x] Public GitHub repository with a README
+- [x] Setup instructions included
+- [ ] Compile screenshot uploaded
+- [ ] Deployment screenshot uploaded
+- [x] Public state vs. private witness explained
+- [x] Initial product idea paragraph included
+- [x] Repository contains a meaningful commit history
 ```
