@@ -90,8 +90,31 @@ compact compile contracts/skillgate.compact contracts/managed/skillgate
 npm test
 ```
 
-6. Deploy to Preview or Preprod using your Midnight deployment flow and note the
-   resulting contract address.
+6. Deploy to Preview or Preprod using the official Midnight CLI flow and note
+   the resulting contract address.
+
+### Preview / Preprod deployment commands
+
+The official Midnight flow is:
+
+```powershell
+npx create-mn-app my-midnight-app --template hello-world
+cd my-midnight-app
+npm run setup -- --network preview
+```
+
+For Preprod, switch the network:
+
+```powershell
+npm run setup -- --network preprod
+```
+
+When the CLI asks for funding, open the faucet for the selected network:
+
+- Preview: https://midnight-tmnight-preview.nethermind.dev/
+- Preprod: https://midnight-tmnight-preprod.nethermind.dev/
+
+The CLI writes the deployed contract address into `.midnight-state.json`.
 
 ## How to capture screenshots for the submission
 
