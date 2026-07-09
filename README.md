@@ -109,6 +109,14 @@ For Preprod, switch the network:
 npm run setup -- --network preprod
 ```
 
+If Docker is not available from WSL, use the Windows PowerShell path instead of the Linux shell, or enable WSL integration in Docker Desktop:
+
+```powershell
+# In Windows PowerShell
+cd C:\Users\gopic\Downloads\skillgate-midnight-newmoon-main\skillgate-midnight-newmoon\my-midnight-app
+npm run setup -- --network preview
+```
+
 When the CLI asks for funding, open the faucet for the selected network:
 
 - Preview: https://midnight-tmnight-preview.nethermind.dev/
