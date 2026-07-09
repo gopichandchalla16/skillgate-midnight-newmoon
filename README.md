@@ -80,14 +80,21 @@ npm test
 
 ## How to capture screenshots for the submission
 
-Use the VS Code integrated terminal and run these commands:
+Open the integrated terminal in VS Code in the project folder and run these commands:
 
-```bash
-cd C:\path\to\skillgate-midnight-newmoon
+```powershell
+cd C:\Users\gopic\Downloads\skillgate-midnight-newmoon-main\skillgate-midnight-newmoon
 npm test
 compact compile contracts/skillgate.compact contracts/managed/skillgate
 git status --short
 ```
+
+What to look for:
+
+- The compile command should finish successfully and list generated artifacts in
+  `contracts/managed`.
+- The deployment step should show a contract address that you can capture in a
+  second screenshot.
 
 Take screenshots on your phone or laptop of:
 
