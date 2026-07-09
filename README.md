@@ -70,15 +70,15 @@ Compact compiler and not the built-in Windows `compact.exe` utility. If the
 command shows the Windows file-compression help text, you are in the wrong
 `compact` context.
 
-Use WSL for the compiler step if needed:
+If you are already inside WSL or Ubuntu shell, use the Linux path directly:
 
 ```bash
-wsl
 cd /mnt/c/Users/gopic/Downloads/skillgate-midnight-newmoon-main/skillgate-midnight-newmoon
+npm test
 compact compile contracts/skillgate.compact contracts/managed/skillgate
 ```
 
-If the compiler is installed in PowerShell already, this command should work:
+If you are in PowerShell, use the Windows path:
 
 ```powershell
 compact compile contracts/skillgate.compact contracts/managed/skillgate
@@ -95,7 +95,9 @@ npm test
 
 ## How to capture screenshots for the submission
 
-Open the integrated terminal in VS Code and choose PowerShell (recommended on Windows). Run these commands from the repository root:
+Open the integrated terminal in VS Code and use the shell that matches your setup:
+
+PowerShell:
 
 ```powershell
 cd C:\Users\gopic\Downloads\skillgate-midnight-newmoon-main\skillgate-midnight-newmoon
@@ -104,7 +106,16 @@ compact compile contracts/skillgate.compact contracts/managed/skillgate
 git status --short
 ```
 
-If you are inside WSL and the path does not resolve, switch to a normal PowerShell terminal instead. The screenshots folder should contain only the PNG images you upload, not an extra README file.
+WSL / Ubuntu shell:
+
+```bash
+cd /mnt/c/Users/gopic/Downloads/skillgate-midnight-newmoon-main/skillgate-midnight-newmoon
+npm test
+compact compile contracts/skillgate.compact contracts/managed/skillgate
+git status --short
+```
+
+Do not type `wsl` inside WSL. The screenshots folder should contain only the PNG images you upload.
 
 What to look for:
 
