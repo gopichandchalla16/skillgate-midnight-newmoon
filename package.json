@@ -1,0 +1,16 @@
+{
+  "name": "skillgate-midnight",
+  "version": "0.1.0",
+  "description": "Level 1 (New Moon) submission — private skill-score gate contract on Midnight",
+  "scripts": {
+    "compile": "compact compile contracts/skillgate.compact contracts/managed/skillgate",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
