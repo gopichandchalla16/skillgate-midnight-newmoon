@@ -80,7 +80,7 @@ npm test
 
 ## How to capture screenshots for the submission
 
-Open the integrated terminal in VS Code in the project folder and run these commands:
+Open the integrated terminal in VS Code and choose PowerShell (recommended on Windows). Run these commands from the repository root:
 
 ```powershell
 cd C:\Users\gopic\Downloads\skillgate-midnight-newmoon-main\skillgate-midnight-newmoon
@@ -88,6 +88,8 @@ npm test
 compact compile contracts/skillgate.compact contracts/managed/skillgate
 git status --short
 ```
+
+If you are inside WSL and the path does not resolve, switch to a normal PowerShell terminal instead. The screenshots folder should contain only the PNG images you upload, not an extra README file.
 
 What to look for:
 
